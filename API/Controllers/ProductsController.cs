@@ -7,15 +7,13 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(IGenericRepository<Product> repository) : ControllerBase {
+public class ProductsController(IGenericRepository<Product> repository) : BaseApiController {
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort) {
-        var spec = new ProductSpecification(brand, type, sort);
-        
-        var products = await repository.ListAsync(spec);
-        
-        return Ok(products);
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecParams specParams) {
+        var spec = new ProductSpecification(specParams);
+
+        return Ok(await CreatePagedResult(repository, spec, specParams.PageIndex, specParams.PageSize));
     }
 
     [HttpGet("{id:int}")]
@@ -45,7 +43,7 @@ public class ProductsController(IGenericRepository<Product> repository) : Contro
         if (product.Id != id || !ProductExists(id)) {
             return BadRequest("Cannot update this product");
         }
-        
+
         repository.Update(product);
 
         if (await repository.SaveAllAsync()) {
@@ -62,7 +60,7 @@ public class ProductsController(IGenericRepository<Product> repository) : Contro
         if (product == null) {
             return NotFound();
         }
-        
+
         repository.Remove(product);
 
         if (await repository.SaveAllAsync()) {
@@ -75,14 +73,14 @@ public class ProductsController(IGenericRepository<Product> repository) : Contro
     [HttpGet("brands")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetBrands() {
         var spec = new BrandListSpecification();
-        
+
         return Ok(await repository.ListAsync(spec));
     }
-    
+
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetTypes() {
         var spec = new TypeListSpecification();
-        
+
         return Ok(await repository.ListAsync(spec));
     }
 
