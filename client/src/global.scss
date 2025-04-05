@@ -1,0 +1,20 @@
+@use '@angular/material' as mat;
+
+$customTheme: mat.define-theme();
+
+@include mat.core();
+
+.custom-theme {
+  @include mat.all-component-themes($customTheme);
+
+  // override button styles
+  .mdc-button, .mdc-raised-button, mdc-stroked-button, .mdc-flat-button {
+    border-radius: 0.375rem;
+  }
+}
+
+.container {
+  margin-inline: 1.5rem;
+  max-width: 96rem;
+  /*@apply mx-auto max-w-screen-2xl mx-5*/
+}
