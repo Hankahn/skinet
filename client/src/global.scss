@@ -14,7 +14,15 @@ $customTheme: mat.define-theme();
 }
 
 .container {
-  margin-inline: 1.5rem;
+  margin-inline: auto;
   max-width: 96rem;
-  /*@apply mx-auto max-w-screen-2xl mx-5*/
+  //@apply mx-auto max-w-screen-2xl
+}
+
+.text-primary {
+  color: #7D00FA;
+}
+
+button.match-input-height {
+  height: var(--mat-form-field-container-height) !important;
 }
