@@ -31,3 +31,15 @@ button.match-input-height {
   border-right-style: none !important;
   padding: 0 !important;
 }
+
+.mat-mdc-snack-bar-container.snack-error {
+  --mdc-snackbar-container-color: #F00;
+  --mat-snack-bar-button-color: #FFF;
+  --mdc-snackbar-supporting-text-color: #FFF;
+}
+
+.mat-mdc-snack-bar-container.snack-success {
+  --mdc-snackbar-container-color: #0F0;
+  --mat-snack-bar-button-color: #FFF;
+  --mdc-snackbar-supporting-text-color: #FFF;
+}

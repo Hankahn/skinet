@@ -1,54 +1,53 @@
 @if (products) {
-  <div class="px-3">
-    <div class="flex flex-col gap-3">
-      <div class="flex gap-3 justify-between">
-        <mat-paginator class="bg-white!"
-                       (page)="handlePageEvent($event)"
-                       [length]="products.count"
-                       [pageSize]="shopParams.pageSize"
-                       [showFirstLastButtons]="true"
-                       [pageSizeOptions]="pageSizeOptions"
-                       [pageIndex]="shopParams.pageIndex - 1"
-                       aria-label="Select page"></mat-paginator>
-        <form class="flex w-full max-w-md mx-4"
-              #searchForm="ngForm"
-              (ngSubmit)="onSearchChange()">
-          <mat-form-field class="h-2! dense-2" appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput type="search" name="search"
-                   [(ngModel)]="shopParams.search">
-            <button mat-icon-button matSuffix type="submit"
+  <div class="flex flex-col gap-3">
+    <div class="flex gap-3 justify-between">
+      <mat-paginator class="bg-white!"
+                     (page)="handlePageEvent($event)"
+                     [length]="products.count"
+                     [pageSize]="shopParams.pageSize"
+                     [showFirstLastButtons]="true"
+                     [pageSizeOptions]="pageSizeOptions"
+                     [pageIndex]="shopParams.pageIndex - 1"
+                     aria-label="Select page"></mat-paginator>
+      <form class="flex w-full max-w-md mx-4"
+            #searchForm="ngForm"
+            (ngSubmit)="onSearchChange()">
+        <mat-form-field class="h-2! w-full" appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput type="text" name="search"
+                 [(ngModel)]="shopParams.search">
+          @if (shopParams.search) {
+            <button mat-icon-button matSuffix type="button"
+                    (click)="clearSearch()"
                     class="p-0!"
-              aria-label="Search">
-              <mat-icon>search</mat-icon>
+                    aria-label="Clear">
+              <mat-icon>close</mat-icon>
             </button>
-          </mat-form-field>
-<!--          <input type="search" name="search" placeholder="Search"-->
-<!--                 [(ngModel)]="shopParams.search"-->
-<!--                 class="w-full grow h-4 p-5 rounded-s-lg border border-gray-500">-->
-<!--          <button mat-icon-button type="submit"-->
-<!--                  class="h-4 py-5 border! border-gray-500! rounded-s-sm!">-->
-<!--            <mat-icon>search</mat-icon>-->
-<!--          </button>-->
-        </form>
-        <div class="flex gap-3">
-          <button mat-stroked-button
-                  (click)="openFiltersDialog()">
-            <mat-icon>filter_list</mat-icon>
-            Filters
+          }
+          <button mat-icon-button matSuffix type="submit"
+                  class="p-0!"
+            aria-label="Search">
+            <mat-icon>search</mat-icon>
           </button>
-          <button mat-stroked-button
-                  [matMenuTriggerFor]="sortMenu">
-            <mat-icon>swap_vert</mat-icon>
-            Sort
-          </button>
-        </div>
+        </mat-form-field>
+      </form>
+      <div class="flex gap-3">
+        <button mat-stroked-button
+                (click)="openFiltersDialog()">
+          <mat-icon>filter_list</mat-icon>
+          Filters
+        </button>
+        <button mat-stroked-button
+                [matMenuTriggerFor]="sortMenu">
+          <mat-icon>swap_vert</mat-icon>
+          Sort
+        </button>
       </div>
-      <div class="grid grid-cols-5 gap-4">
-        @for (product of products.data; track product.id) {
-          <app-product-item [product]="product"></app-product-item>
-        }
-      </div>
+    </div>
+    <div class="grid grid-cols-3 lg:grid-cols-5 gap-4">
+      @for (product of products.data; track product.id) {
+        <app-product-item [product]="product"></app-product-item>
+      }
     </div>
   </div>
 

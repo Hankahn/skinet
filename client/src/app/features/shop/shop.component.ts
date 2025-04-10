@@ -70,6 +70,12 @@ export class ShopComponent implements OnInit {
     this.getProducts();
   }
 
+  clearSearch() {
+    this.shopParams.pageIndex = 1;
+    this.shopParams.search = '';
+    this.getProducts();
+  }
+
   handlePageEvent(event: PageEvent) {
     this.shopParams.pageIndex = event.pageIndex + 1;
     this.shopParams.pageSize = event.pageSize;
